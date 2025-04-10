@@ -1,4 +1,4 @@
-package io.automationhacks.backend.domain.model.administration.repositories;
+package io.automationhacks.backend.domain.artifactory.model.repositories;
 
 import lombok.Builder;
 import lombok.Data;

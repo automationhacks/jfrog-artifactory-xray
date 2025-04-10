@@ -7,4 +7,9 @@ public class StringUtils {
         }
         return (int) (Math.random() * (end - start)) + start;
     }
+
+    public static String getRandomString() {
+        var uuid = java.util.UUID.randomUUID();
+        return uuid.toString().substring(0, 5);
+    }
 }

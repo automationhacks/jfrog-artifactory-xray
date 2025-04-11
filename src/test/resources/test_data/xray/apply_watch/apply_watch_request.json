@@ -1,0 +1,9 @@
+{
+  "watch_names": [
+    "example1-watch"
+  ],
+  "date_range": {
+    "start_date": "2025-04-09T10:25:00+02:00",
+    "end_date": "2025-04-19T10:30:00+02:00"
+  }
+}

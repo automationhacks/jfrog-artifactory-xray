@@ -1,36 +1,28 @@
 package io.automationhacks.backend.domain.artifactory.client.repositories;
 
+import static io.automationhacks.backend.core.api.ReqResBuilder.buildAPIResponse;
+import static io.automationhacks.backend.core.api.ReqResBuilder.getRequestSpecification;
 import static io.restassured.RestAssured.given;
 
 import io.automationhacks.backend.core.api.APIResponse;
-import io.automationhacks.backend.core.constants.Auth;
 import io.automationhacks.backend.domain.artifactory.constants.Endpoints;
-import io.restassured.http.Header;
-import io.restassured.specification.RequestSpecification;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RepositoryClient {
+    private final Logger logger = LoggerFactory.getLogger(RepositoryClient.class);
+
     public APIResponse createRepository(String repoKey, String body) {
         String url = Endpoints.CREATE_REPOSITORY_URL.formatted(Endpoints.HOST_NAME);
+        logger.info("[REQUEST] Create repository: %s".formatted(body));
 
-        RequestSpecification requestSpecification = getRequestSpecification();
-
+        var requestSpec = getRequestSpecification();
         var response =
-                given().spec(requestSpecification)
-                        .pathParam("repoKey", repoKey)
-                        .body(body)
-                        .when()
-                        .put(url);
+                given().spec(requestSpec).pathParam("repoKey", repoKey).body(body).when().put(url);
+        logger.info("[RESPONSE] Create repository: %s".formatted(response.getBody().asString()));
 
-        var responseHeaders =
-                response.headers().asList().stream()
-                        .collect(
-                                java.util.stream.Collectors.toMap(
-                                        Header::getName, Header::getValue));
-        return APIResponse.builder()
-                .statusCode(response.getStatusCode())
-                .body(response.getBody().asString())
-                .headers(responseHeaders)
-                .build();
+        return buildAPIResponse(response);
     }
 
     public APIResponse getRepositories() {
@@ -38,17 +30,8 @@ public class RepositoryClient {
 
         var requestSpec = getRequestSpecification();
         var response = given().spec(requestSpec).when().get(url);
+        logger.info("[RESPONSE] Get repositories: %s".formatted(response.getBody().asString()));
 
-        return APIResponse.builder()
-                .statusCode(response.getStatusCode())
-                .body(response.getBody().asString())
-                .build();
-    }
-
-    private static RequestSpecification getRequestSpecification() {
-        var auth = new Auth().getCredentials();
-        return given().auth()
-                .basic(auth.username(), auth.password())
-                .header("Content-Type", "application/json");
+        return buildAPIResponse(response);
     }
 }

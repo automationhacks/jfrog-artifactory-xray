@@ -7,4 +7,5 @@ public class Endpoints {
     public static final String CREATE_SECURITY_POLICY_URL = "%s/xray/api/v2/policies";
     public static final String CREATE_WATCH_URL = "%s/xray/api/v2/watches";
     public static final String APPLY_WATCH_URL = "%s/xray/api/v1/applyWatch";
+    public static final String SCAN_STATUS_URL = "%s/xray/api/v1/artifact/status";
 }

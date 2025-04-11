@@ -10,7 +10,7 @@ import io.restassured.specification.RequestSpecification;
 
 public class RepositoryClient {
     public APIResponse createRepository(String repoKey, String body) {
-        String url = Endpoints.CREATE_REPOSITORY_URL.formatted(Endpoints.BASE_URL);
+        String url = Endpoints.CREATE_REPOSITORY_URL.formatted(Endpoints.HOST_NAME);
 
         RequestSpecification requestSpecification = getRequestSpecification();
 
@@ -34,7 +34,7 @@ public class RepositoryClient {
     }
 
     public APIResponse getRepositories() {
-        String url = Endpoints.GET_REPOSITORIES_URL.formatted(Endpoints.BASE_URL);
+        String url = Endpoints.GET_REPOSITORIES_URL.formatted(Endpoints.HOST_NAME);
 
         var requestSpec = getRequestSpecification();
         var response = given().spec(requestSpec).when().get(url);

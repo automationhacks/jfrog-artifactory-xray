@@ -14,4 +14,14 @@ public class XrayAssertion {
                 .that(createSecurityPolicyResponse.getStatusCode())
                 .isEqualTo(201);
     }
+
+    public void verifyWatchIsCreated(APIResponse createWatchResponse) {
+        assertWithMessage(
+                        "Watch creation failed with status code %s and response %s"
+                                .formatted(
+                                        createWatchResponse.getStatusCode(),
+                                        createWatchResponse.getBody()))
+                .that(createWatchResponse.getStatusCode())
+                .isEqualTo(201);
+    }
 }

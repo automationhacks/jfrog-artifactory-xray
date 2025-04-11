@@ -1,0 +1,28 @@
+{
+  "general_data": {
+    "name": "example1-watch",
+    "description": "This is an example watch #1",
+    "active": true
+  },
+  "project_resources": {
+    "resources": [
+      {
+        "type": "repository",
+        "bin_mgr_id": "default",
+        "name": "docker-local",
+        "filters": [
+          {
+            "type": "regex",
+            "value": ".*"
+          }
+        ]
+      }
+    ]
+  },
+  "assigned_policies": [
+    {
+      "name": "sec_policy_1",
+      "type": "security"
+    }
+  ]
+}

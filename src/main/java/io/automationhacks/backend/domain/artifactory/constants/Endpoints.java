@@ -5,4 +5,5 @@ public class Endpoints {
     public static final String CREATE_REPOSITORY_URL = "%s/artifactory/api/repositories/{repoKey}";
     public static final String GET_REPOSITORIES_URL = "%s/artifactory/api/repositories";
     public static final String CREATE_SECURITY_POLICY_URL = "%s/xray/api/v2/policies";
+    public static final String CREATE_WATCH_URL = "%s/xray/api/v2/watches";
 }

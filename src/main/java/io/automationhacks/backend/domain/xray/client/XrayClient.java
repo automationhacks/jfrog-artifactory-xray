@@ -29,6 +29,25 @@ public class XrayClient {
                 .build();
     }
 
+    public APIResponse createWatch(String body) {
+        String url = Endpoints.CREATE_WATCH_URL.formatted(Endpoints.HOST_NAME);
+
+        var requestSpecification = getRequestSpecification();
+
+        var response = given().spec(requestSpecification).body(body).when().post(url);
+
+        var responseHeaders =
+                response.headers().asList().stream()
+                        .collect(
+                                java.util.stream.Collectors.toMap(
+                                        Header::getName, Header::getValue));
+        return APIResponse.builder()
+                .statusCode(response.getStatusCode())
+                .body(response.getBody().asString())
+                .headers(responseHeaders)
+                .build();
+    }
+
     private static RequestSpecification getRequestSpecification() {
         var auth = new Auth().getCredentials();
         String authHeader =

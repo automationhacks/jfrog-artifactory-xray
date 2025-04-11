@@ -1,6 +1,7 @@
 package backend.e2e.assertion;
 
 import static com.google.common.truth.Truth.assertWithMessage;
+
 import static io.automationhacks.backend.core.object.Serialization.deserialize;
 
 import io.automationhacks.backend.core.api.APIResponse;
@@ -50,5 +51,15 @@ public class XrayAssertion {
                                         applyWatchResponse.getBody()))
                 .that(applyWatchResponse.getStatusCode())
                 .isEqualTo(202);
+    }
+
+    public void verifyViolationsArePresentAsPerPolicy(APIResponse getViolationsResponse) {
+        assertWithMessage(
+                        "Get violations failed with status code %s and response %s"
+                                .formatted(
+                                        getViolationsResponse.getStatusCode(),
+                                        getViolationsResponse.getBody()))
+                .that(getViolationsResponse.getStatusCode())
+                .isEqualTo(200);
     }
 }

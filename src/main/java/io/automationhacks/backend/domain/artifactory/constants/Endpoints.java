@@ -8,4 +8,5 @@ public class Endpoints {
     public static final String CREATE_WATCH_URL = "%s/xray/api/v2/watches";
     public static final String APPLY_WATCH_URL = "%s/xray/api/v1/applyWatch";
     public static final String SCAN_STATUS_URL = "%s/xray/api/v1/artifact/status";
+    public static final String GET_VIOLATIONS_URL = "%s/xray/api/v1/violations";
 }

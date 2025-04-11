@@ -57,4 +57,15 @@ public class XrayClient {
 
         return buildAPIResponse(response);
     }
+
+    public APIResponse getViolations(String body) {
+        String url = Endpoints.GET_VIOLATIONS_URL.formatted(Endpoints.HOST_NAME);
+        logger.info("[REQUEST] Get violations: %s".formatted(body));
+
+        var requestSpecification = getRequestSpecWithAuthHeader();
+        var response = given().spec(requestSpecification).when().body(body).post(url);
+        logger.info("[RESPONSE] Get violations: %s".formatted(response.getBody().asString()));
+
+        return buildAPIResponse(response);
+    }
 }

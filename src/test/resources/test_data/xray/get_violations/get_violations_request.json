@@ -1,0 +1,21 @@
+{
+  "filters": {
+    "watch_name": "docker-local-8e7d5_watch",
+    "violation_type": "Security",
+    "min_severity": "High",
+    "resources": {
+      "artifacts": [
+        {
+          "repo": "docker-local-8e7d5",
+          "path": "/alpine/3.9/manifest.json"
+        }
+      ]
+    }
+  },
+  "pagination": {
+    "order_by": "created",
+    "direction": "asc",
+    "limit": 100,
+    "offset": 1
+  }
+}

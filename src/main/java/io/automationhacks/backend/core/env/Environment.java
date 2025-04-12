@@ -25,4 +25,8 @@ public class Environment {
     public static String getHostName() {
         return properties.getProperty("ARTIFACTORY_HOSTNAME");
     }
+
+    public static String getJFrogUI() {
+        return properties.getProperty("JFROG_UI");
+    }
 }

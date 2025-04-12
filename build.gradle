@@ -24,6 +24,7 @@ dependencies {
     testImplementation 'org.testng:testng:7.11.0'
     testImplementation 'com.google.truth:truth:1.4.4'
     testImplementation 'org.awaitility:awaitility:4.3.0'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.31.0'
 }
 
 test {

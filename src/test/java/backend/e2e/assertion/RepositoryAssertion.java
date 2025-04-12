@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RepositoryAssertion {
 
-    public void verifyRepositoryIsCreated(String repoKey, APIResponse response) {
+    public void verifyCreateRepositoryIsSuccessful(String repoKey, APIResponse response) {
         assertWithMessage(
                         "Repository not created successfully for key: %s with response: %s",
                         repoKey, response.getBody())
@@ -21,7 +21,7 @@ public class RepositoryAssertion {
                 .isEqualTo(200);
     }
 
-    public void verifyLocalRepositoryIsPresent(String repoKey, APIResponse repositoriesResponse) {
+    public void verifyLocalRepositoryIsCreated(String repoKey, APIResponse repositoriesResponse) {
         assertWithMessage(
                         "Repository not found for key: %s with response: %s",
                         repoKey, repositoriesResponse.getBody())

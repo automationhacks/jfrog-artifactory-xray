@@ -7,13 +7,20 @@ public class CreateWatchRequestBuilder {
     private final CreateWatchRequest createWatchRequest;
 
     public CreateWatchRequestBuilder() {
-        var body = FileManager.readFile("test_data/xray/create_watch/create_watch_on_security_policy.json");
+        var body =
+                FileManager.readFile(
+                        "test_data/xray/create_watch/create_watch_on_security_policy.json");
         createWatchRequest = Serialization.deserialize(body, CreateWatchRequest.class);
     }
 
     public CreateWatchRequestBuilder withWatchAndPolicyName(String watchName, String policyName) {
         this.createWatchRequest.getGeneralData().setName(watchName);
         this.createWatchRequest.getAssignedPolicies().get(0).setName(policyName);
+        return this;
+    }
+
+    public CreateWatchRequestBuilder withProjectResourcesName(String projectName) {
+        this.createWatchRequest.getProjectResources().getResources().get(0).setName(projectName);
         return this;
     }
 

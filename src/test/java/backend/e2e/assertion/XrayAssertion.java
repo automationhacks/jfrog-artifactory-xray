@@ -28,7 +28,7 @@ public class XrayAssertion {
                 .isEqualTo(201);
     }
 
-    public void verifyXrayScanIsDone(APIResponse scanStatusResponse, String repoKey) {
+    public void verifyXrayScanReturnsSuccess(APIResponse scanStatusResponse, String repoKey) {
         assertWithMessage(
                         "Scan status failed with status code %s and response %s"
                                 .formatted(
@@ -36,11 +36,6 @@ public class XrayAssertion {
                                         scanStatusResponse.getBody()))
                 .that(scanStatusResponse.getStatusCode())
                 .isEqualTo(200);
-        var scanStatusResponseBody =
-                deserialize(scanStatusResponse.getBody(), ScanStatusResponse.class);
-        assertWithMessage("Scan status is not done for %s".formatted(repoKey))
-                .that(scanStatusResponseBody.getOverall().getStatus())
-                .isEqualTo("DONE");
     }
 
     public void verifyWatchIsAppliedOnPolicy(APIResponse applyWatchResponse) {

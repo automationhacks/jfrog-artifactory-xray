@@ -1,8 +1,15 @@
 package backend.e2e.helper;
 
-import io.automationhacks.backend.core.command.CmdExec;
+import static io.automationhacks.backend.core.object.Serialization.deserialize;
 
+import io.automationhacks.backend.core.command.CmdExec;
+import io.automationhacks.backend.domain.xray.client.XrayClient;
+import io.automationhacks.backend.domain.xray.model.scan_status.response.ScanStatusResponse;
+
+import org.awaitility.Awaitility;
 import org.slf4j.Logger;
+
+import java.util.concurrent.TimeUnit;
 
 public class TestHelper {
     private final Logger logger = org.slf4j.LoggerFactory.getLogger(TestHelper.class);
@@ -26,5 +33,21 @@ public class TestHelper {
                 logger.info("Command failed: %s".formatted(command));
             }
         }
+    }
+
+    public void waitForXRayScanToBeDone(String body) {
+        var client = new XrayClient();
+
+        Awaitility.await()
+                .pollInterval(10, TimeUnit.SECONDS)
+                .atMost(45, TimeUnit.MINUTES)
+                .until(
+                        () -> {
+                            var response = client.getScanStatus(body);
+                            var scanStatusResponseBody =
+                                    deserialize(response.getBody(), ScanStatusResponse.class);
+                            var status = scanStatusResponseBody.getOverall().getStatus();
+                            return status.equals("DONE");
+                        });
     }
 }

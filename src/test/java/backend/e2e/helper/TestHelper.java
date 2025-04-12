@@ -14,17 +14,26 @@ import java.util.concurrent.TimeUnit;
 public class TestHelper {
     private final Logger logger = org.slf4j.LoggerFactory.getLogger(TestHelper.class);
 
-    public void pushImageToRepository(String repoKey, String imageName) {
+    public void pushImageToRepository(
+            String repoKey, String imageName, String tagName, String uri) {
+        logger.info("Pushing image to repository: {}", repoKey);
+
+        var protocolHostname = uri.split("://");
+        var hostname = protocolHostname[1];
+
+        var path = "%s/%s/%s".formatted(hostname, repoKey, imageName);
+        logger.info("Image path: {}", path);
+
         String[] commands = {
             "docker pull %s".formatted(imageName),
-            "docker login https://automationhacks.jfrog.io",
-            "docker tag alpine:3.9 automationhacks.jfrog.io/%s/%s".formatted(repoKey, imageName),
-            "docker push automationhacks.jfrog.io/%s/%s".formatted(repoKey, imageName)
+            "docker login %s".formatted(uri),
+            "docker tag %s %s".formatted(tagName, path),
+            "docker push %s".formatted(path)
         };
 
         var commandExec = new CmdExec();
         for (String command : commands) {
-            logger.info("Running: {}", command);
+            logger.info("Running command: {}", command);
             boolean success = commandExec.runCommand(command);
 
             if (success) {

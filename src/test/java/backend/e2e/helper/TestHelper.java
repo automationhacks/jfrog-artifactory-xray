@@ -24,13 +24,13 @@ public class TestHelper {
 
         var commandExec = new CmdExec();
         for (String command : commands) {
-            logger.info("Running: %s".formatted(command));
+            logger.info("Running: {}", command);
             boolean success = commandExec.runCommand(command);
 
             if (success) {
-                logger.info("Command succeeded: %s".formatted(command));
+                logger.info("✅ Command succeeded: {}", command);
             } else {
-                logger.info("Command failed: %s".formatted(command));
+                logger.info("❌ Command failed: {}", command);
             }
         }
     }

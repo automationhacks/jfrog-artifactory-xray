@@ -15,12 +15,12 @@ public class RepositoryClient {
 
     public APIResponse createRepository(String repoKey, String body) {
         String url = Endpoints.CREATE_REPOSITORY_URL.formatted(Endpoints.HOST_NAME);
-        logger.info("[REQUEST] Create repository: %s".formatted(body));
+        logger.info("[REQUEST] Create repository: {}", body);
 
         var requestSpec = getRequestSpecification();
         var response =
                 given().spec(requestSpec).pathParam("repoKey", repoKey).body(body).when().put(url);
-        logger.info("[RESPONSE] Create repository: %s".formatted(response.getBody().asString()));
+        logger.info("[RESPONSE] Create repository: {}", response.getBody().asString());
 
         return buildAPIResponse(response);
     }
@@ -30,7 +30,7 @@ public class RepositoryClient {
 
         var requestSpec = getRequestSpecification();
         var response = given().spec(requestSpec).when().get(url);
-        logger.info("[RESPONSE] Get repositories: %s".formatted(response.getBody().asString()));
+        logger.info("[RESPONSE] Get repositories: {}", response.getBody().asString());
 
         return buildAPIResponse(response);
     }

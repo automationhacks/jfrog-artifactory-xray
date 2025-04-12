@@ -2,7 +2,7 @@ package backend.e2e.flow;
 
 import static io.automationhacks.backend.core.object.Serialization.serialize;
 
-import backend.e2e.assertion.RepositoryAssertion;
+import backend.e2e.assertion.ArtifactoryAssertion;
 
 import io.automationhacks.backend.domain.artifactory.client.repositories.RepositoryClient;
 import io.automationhacks.backend.domain.artifactory.model.repositories.CreateRepositoryRequest;
@@ -29,10 +29,10 @@ public class ArtifactoryFlow {
         var client = new RepositoryClient();
         var response = client.createRepository(repoKey, requestBody);
 
-        var repositoryAssertion = new RepositoryAssertion();
-        repositoryAssertion.verifyCreateRepositoryIsSuccessful(repoKey, response);
+        var assertion = new ArtifactoryAssertion();
+        assertion.verifyCreateRepositoryIsSuccessful(repoKey, response);
 
         var repositoriesResponse = client.getRepositories();
-        repositoryAssertion.verifyLocalRepositoryIsCreated(repoKey, repositoriesResponse);
+        assertion.verifyLocalRepositoryIsCreated(repoKey, repositoriesResponse);
     }
 }

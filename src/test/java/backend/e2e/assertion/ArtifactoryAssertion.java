@@ -11,7 +11,7 @@ import io.automationhacks.backend.domain.artifactory.model.repositories.get_repo
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class RepositoryAssertion {
+public class ArtifactoryAssertion {
 
     public void verifyCreateRepositoryIsSuccessful(String repoKey, APIResponse response) {
         assertWithMessage(
@@ -40,6 +40,4 @@ public class RepositoryAssertion {
                 .that(repository.isPresent())
                 .isTrue();
     }
-
-
 }

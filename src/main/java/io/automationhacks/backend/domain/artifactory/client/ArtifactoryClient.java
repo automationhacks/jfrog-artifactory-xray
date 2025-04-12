@@ -1,4 +1,4 @@
-package io.automationhacks.backend.domain.artifactory.client.repositories;
+package io.automationhacks.backend.domain.artifactory.client;
 
 import static io.automationhacks.backend.core.api.ReqResBuilder.buildAPIResponse;
 import static io.automationhacks.backend.core.api.ReqResBuilder.getRequestSpecification;
@@ -10,8 +10,8 @@ import io.automationhacks.backend.domain.artifactory.constants.Endpoints;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RepositoryClient {
-    private final Logger logger = LoggerFactory.getLogger(RepositoryClient.class);
+public class ArtifactoryClient {
+    private final Logger logger = LoggerFactory.getLogger(ArtifactoryClient.class);
 
     public APIResponse createRepository(String repoKey, String body) {
         String url = Endpoints.CREATE_REPOSITORY_URL.formatted(Endpoints.HOST_NAME);

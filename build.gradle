@@ -11,22 +11,46 @@ repositories {
 }
 
 dependencies {
+    // Annotation processing
     implementation 'org.projectlombok:lombok:1.18.38'
     annotationProcessor("org.projectlombok:lombok:1.18.38")
 
+    // API automation
     implementation 'io.rest-assured:rest-assured:5.5.1'
     implementation 'com.google.code.gson:gson:2.12.1'
 
+    // Logging
     implementation 'ch.qos.logback:logback-core:1.5.18'
     implementation 'ch.qos.logback:logback-classic:1.5.18'
     implementation 'org.slf4j:slf4j-api:2.0.17'
 
+    // Libraries and test runners
     testImplementation 'org.testng:testng:7.11.0'
     testImplementation 'com.google.truth:truth:1.4.4'
     testImplementation 'org.awaitility:awaitility:4.3.0'
+
+    // Web automation
     implementation 'org.seleniumhq.selenium:selenium-java:4.31.0'
+
+    // Reporting
+    implementation 'com.epam.reportportal:agent-java-testng:5.4.6'
+    implementation 'com.epam.reportportal:logger-java-logback:5.2.3'
 }
 
 test {
-    useTestNG()
+    useTestNG() {
+        useDefaultListeners = true
+        listeners << 'com.epam.reportportal.testng.ReportPortalTestNGListener'
+        parallel = 'methods'
+        threadCount = 6
+
+        includeGroups System.getProperty('includedGroups', '')
+        excludeGroups System.getProperty('excludedGroups', '')
+    }
+
+    // pass system properties from commandline
+    systemProperties = System.properties
+
+    // show stdout and stderr of test JVM on console
+    testLogging.showStandardStreams = true
 }

@@ -4,7 +4,7 @@ import static io.automationhacks.backend.core.object.Serialization.serialize;
 
 import backend.e2e.assertion.ArtifactoryAssertion;
 
-import io.automationhacks.backend.domain.artifactory.client.repositories.RepositoryClient;
+import io.automationhacks.backend.domain.artifactory.client.ArtifactoryClient;
 import io.automationhacks.backend.domain.artifactory.model.repositories.CreateRepositoryRequest;
 
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class ArtifactoryFlow {
                         .build();
 
         var requestBody = serialize(createRepositoryRequest);
-        var client = new RepositoryClient();
+        var client = new ArtifactoryClient();
         var response = client.createRepository(repoKey, requestBody);
 
         var assertion = new ArtifactoryAssertion();

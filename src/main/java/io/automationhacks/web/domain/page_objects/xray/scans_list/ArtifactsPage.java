@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ArtifactsPage {
+    private final Logger logger = LoggerFactory.getLogger(ArtifactsPage.class);
     private final WebDriver driver;
 
     public ArtifactsPage(WebDriver driver) {
@@ -45,6 +48,7 @@ public class ArtifactsPage {
 
             severityCounts.put(severity, count);
         }
+        logger.info("Policy violations: {}", severityCounts);
         return severityCounts;
     }
 }

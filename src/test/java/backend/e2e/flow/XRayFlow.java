@@ -3,8 +3,8 @@ package backend.e2e.flow;
 import static io.automationhacks.backend.core.object.Serialization.serialize;
 
 import backend.e2e.assertion.XrayAssertion;
-
 import backend.e2e.helper.TestHelper;
+
 import io.automationhacks.backend.core.constants.DateTimeConstants;
 import io.automationhacks.backend.core.utils.DateTimeUtils;
 import io.automationhacks.backend.domain.xray.client.XrayClient;
@@ -16,9 +16,9 @@ import io.automationhacks.backend.domain.xray.model.get_violations.request.GetVi
 import io.automationhacks.backend.domain.xray.model.scan_status.ScanStatusRequest;
 
 public class XRayFlow {
-    XrayClient xRayClient = new XrayClient();
-    XrayAssertion xrayAssertion = new XrayAssertion();
-    TestHelper testHelper = new TestHelper();
+    private final XrayClient xRayClient = new XrayClient();
+    private final XrayAssertion xrayAssertion = new XrayAssertion();
+    private final TestHelper testHelper = new TestHelper();
 
     public void createSecurityPolicy(String secPolicyName) {
         var createSecurityPolicyRequest =

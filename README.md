@@ -9,6 +9,10 @@ This framework automates a functional flow allowing a customer to:
 5. Check Xray catches vulnerabilities and flags them as per security policy
 6. Verify the count on UI
 
+You can see the postman collection under:
+
+`/postman` to see relevant API request and responses
+
 ## Tech stack
 
 This project uses below tech stack
@@ -31,7 +35,44 @@ This framework keeps below simple principles in mind:
    required
 4. Given robust and fast signals on pass/fail metrics and test reliability
 
+## Design patterns used
+
+- **Builder pattern**: to prepare request payloads for APIs
+- **Factory pattern**: provide appropriate WebDriver instance for web automation
+- **Page Object Model**: to separate page elements and actions from test logic
+
 ## Pre setup
+
+### Register your trial in JFrog
+
+Please set up a trial account. Please follow the following steps to take.
+
+#### Step 1: Trial Account Setup
+
+1. Visit the JFrog trial page: https://jfrog.com/start-free/#trialOptions.
+2. Select the **14-day** trial option.
+3. Choose a signup method
+
+Follow the instructions to complete the setup.
+
+1. After setup, you’ll receive an email from `service@jfrog.com` with your platform
+   details (URL, username, and password).
+
+> Please note: If you registered using Google, access the platform by logging in with your
+> Google account and **setting up an admin user**. Additionally, you will receive
+> a platform URL in the format `https://{platform_id}.jfrog.io`. Take note of the
+> `platform_id`, as it will be required when pushing a Docker image to the platform.
+
+#### Step 2: Create an Admin User
+
+1. Log in to the JFrog Platform using your Google account.
+2. Navigate to the Administration tab in the top menu.
+3. Click on User Management in the left-hand menu.
+4. Click New User and provide the following details:
+
+- Username: [Choose a username]
+- Email: [Provide an email]
+- Role: Select Administer Platform.
 
 ### Setup reporting stack
 
@@ -113,8 +154,3 @@ For config
   the test environment, this can easily be scaled to support different environments by adding property files and a
   toggle in Environment class
 
-## Patterns used
-
-- **Builder pattern**: to prepare request payloads for APIs
-- **Factory pattern**: provide appropriate WebDriver instance for web automation
-- **Page Object Model**: to separate page elements and actions from test logic

@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 
 import java.util.concurrent.TimeUnit;
 
-public class TestHelper {
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(TestHelper.class);
+public class APITestHelper {
+    private final Logger logger = org.slf4j.LoggerFactory.getLogger(APITestHelper.class);
 
     public void pushImageToRepository(
             String repoKey, String imageName, String tagName, String uri) {

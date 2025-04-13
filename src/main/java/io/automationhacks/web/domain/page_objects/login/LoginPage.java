@@ -13,6 +13,7 @@ public class LoginPage {
     private final String userNameTextBoxCss = "input[name='username']";
     private final String passwordTextBoxCss = "input[name='password']";
     private final String loginButtonCss = ".el-p-form-item__content > button";
+    private final String welcomeBannerLabelClass = "login-form-title";
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
@@ -30,11 +31,13 @@ public class LoginPage {
     }
 
     public String getLoginPageBanner() {
-        return driver.findElement(By.className("login-form-title")).getText();
+        return driver.findElement(By.className(welcomeBannerLabelClass)).getText();
     }
 
     public void waitForLoginPageToLoad() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("login-form-title")));
+        wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.className(welcomeBannerLabelClass)));
     }
 }

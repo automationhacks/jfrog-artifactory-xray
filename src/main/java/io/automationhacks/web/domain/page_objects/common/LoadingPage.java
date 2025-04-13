@@ -14,10 +14,12 @@ public class LoadingPage {
         this.driver = driver;
     }
 
-    By poundingHeartContainer = By.className("pounding-heart-container");
+    private final String poundingHeartContainerClass = "pounding-heart-container";
 
     public void waitForAnimationToFinish() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(poundingHeartContainer));
+        wait.until(
+                ExpectedConditions.invisibilityOfElementLocated(
+                        By.className(poundingHeartContainerClass)));
     }
 }

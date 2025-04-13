@@ -21,27 +21,33 @@ public class ArtifactsPage {
         this.driver = driver;
     }
 
+    private final String xRayIssuesBtnCss = "[data-cy='xray-issues-bar']";
+    private final String vulnerabilityLabelCss = ".legend-item-label";
+    private final String vulnerabilityValueCss = ".legend-item-value";
+
     public void clickOnVulnerabilities(String path) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(
-                ExpectedConditions.visibilityOfElementLocated(
-                        By.cssSelector("div[row-id='%s']".formatted(path))));
-        var row = driver.findElements(By.cssSelector("div[row-id='%s']".formatted(path))).get(0);
-        row.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(xRayIssuesBtnCss)));
+
+        var xrayIssues = driver.findElement(By.cssSelector(xRayIssuesBtnCss));
+        xrayIssues.click();
     }
 
     public Map<String, Integer> getPolicyViolations() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        String vulnerabilityContainerClass = "[data-cy='scansListOverviewPolicyViolations']";
+        wait.until(
+                ExpectedConditions.presenceOfElementLocated(
+                        By.cssSelector(vulnerabilityContainerClass)));
+
         List<WebElement> legendItems =
-                wait.until(
-                        ExpectedConditions.presenceOfAllElementsLocatedBy(
-                                By.cssSelector(".legend-item")));
+                driver.findElements(By.cssSelector(vulnerabilityContainerClass));
 
         Map<String, Integer> severityCounts = new HashMap<>();
 
         for (WebElement item : legendItems) {
-            WebElement labelElement = item.findElement(By.cssSelector(".legend-item-label"));
-            WebElement valueElement = item.findElement(By.cssSelector(".legend-item-value"));
+            WebElement labelElement = item.findElement(By.cssSelector(vulnerabilityLabelCss));
+            WebElement valueElement = item.findElement(By.cssSelector(vulnerabilityValueCss));
 
             String severity = labelElement.getText().trim();
             int count = Integer.parseInt(valueElement.getText().trim());

@@ -4,7 +4,7 @@ import static io.automationhacks.backend.core.object.Serialization.serialize;
 import static io.automationhacks.backend.core.utils.DateTimeUtils.*;
 
 import backend.e2e.assertion.XrayAssertion;
-import backend.e2e.helper.TestHelper;
+import backend.e2e.helper.APITestHelper;
 
 import io.automationhacks.backend.core.constants.DateTimeConstants;
 import io.automationhacks.backend.domain.xray.client.XrayClient;
@@ -18,7 +18,7 @@ import io.automationhacks.backend.domain.xray.model.scan_status.ScanStatusReques
 public class XrayFlow {
     private final XrayClient xRayClient = new XrayClient();
     private final XrayAssertion xrayAssertion = new XrayAssertion();
-    private final TestHelper testHelper = new TestHelper();
+    private final APITestHelper testHelper = new APITestHelper();
 
     public void createSecurityPolicy(String secPolicyName) {
         String description = "Security policy with min severity as high";

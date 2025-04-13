@@ -1,4 +1,4 @@
-package backend.e2e.assertion;
+package web.assertion;
 
 import static com.google.common.truth.Truth.assertWithMessage;
 

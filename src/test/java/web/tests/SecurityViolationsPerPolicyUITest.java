@@ -1,15 +1,11 @@
-package backend.e2e.tests;
+package web.tests;
 
 import static io.automationhacks.backend.core.env.Environment.getPassword;
 import static io.automationhacks.backend.core.env.Environment.getUsername;
 
-import backend.e2e.assertion.XrayUIAssertions;
-import backend.e2e.flow.ArtifactoryFlow;
-import backend.e2e.flow.XrayFlow;
-import backend.e2e.helper.TestHelper;
-
 import io.automationhacks.backend.core.env.Environment;
 import io.automationhacks.backend.core.utils.StringUtils;
+import io.automationhacks.common.testing.TestSuites;
 import io.automationhacks.web.core.constant.Browser;
 import io.automationhacks.web.core.driver.DriverFactory;
 import io.automationhacks.web.domain.constants.PageUrls;
@@ -22,9 +18,13 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class VulnerabilityScanByPolicyTest {
+import web.assertion.XrayUIAssertions;
+import web.helper.JFrogWebHelper;
+
+public class SecurityViolationsPerPolicyUITest {
     private final WebDriver driver = new DriverFactory(Browser.CHROME).getDriver();
     private final String jFrogUI = Environment.getJFrogUI();
+    private String repoKey;
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
@@ -32,31 +32,21 @@ public class VulnerabilityScanByPolicyTest {
 
         var loadingPage = new LoadingPage(driver);
         loadingPage.waitForAnimationToFinish();
+
+        repoKey = "docker-local-%s".formatted(StringUtils.getRandomString());
+        new JFrogWebHelper().setUpRepoPolicyAndWatches(repoKey);
     }
 
-    @Test
-    public void testVulnerabilityScanByPolicy() {
-        String repoKey = "docker-local-%s".formatted(StringUtils.getRandomString());
-        new ArtifactoryFlow().createRepositoryInArtifactory(repoKey);
-
-        var testHelper = new TestHelper();
-
-        String dockerImage = "alpine:3.9";
-        testHelper.pushImageToRepository(
-                repoKey, dockerImage, dockerImage, Environment.getHostName());
-
-        String secPolicyName = "%s_policy".formatted(repoKey);
-        var xRayFlow = new XrayFlow();
-        xRayFlow.createSecurityPolicy(secPolicyName);
-
-        String watchName = "%s_watch".formatted(repoKey);
-        xRayFlow.createWatch(repoKey, watchName, secPolicyName);
-        xRayFlow.applyWatchOnPolicy(watchName, -5, 5);
-
-        String artifactPath = "alpine/3.9/manifest.json";
-        xRayFlow.checkScanIsDone(repoKey, artifactPath);
-        xRayFlow.checkViolationsAreGenerated(repoKey, artifactPath, watchName);
-
+    @Test(
+            groups = {TestSuites.WEB_UI, TestSuites.REGRESSION},
+            description =
+                    """
+                GIVEN watch and policy is created
+                WHEN scan is opened
+                THEN policy violations should only have critical and high severity
+                """)
+    public void
+            givenWatchAndPolicyIsCreated_WhenScanIsOpened_ThenPolicyViolationsShouldOnlyHaveCriticalAndHigh() {
         var loginPage = new LoginPage(driver);
         var loginPageText = loginPage.getLoginPageBanner();
 

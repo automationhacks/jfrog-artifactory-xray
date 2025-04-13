@@ -15,7 +15,9 @@ public class DriverFactory {
     public WebDriver getDriver() {
         return switch (browser) {
             case CHROME:
-                yield new ChromeDriver();
+                WebDriver driver = new ChromeDriver();
+                driver.manage().window().maximize();
+                yield driver;
         };
     }
 }

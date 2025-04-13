@@ -136,19 +136,19 @@ Below is the general folder structure:
 - `backend/domain`: Contains domain-specific classes for Artifactory and Xray, including client classes, model classes,
   and request/response builders.
 
-For web:
+### Web
 
 - `web/core`: Contains core classes for web automation, including browser constants and driver factory.
 - `web/domain`: Contains domain-specific classes for web automation, including page objects and constants.
 
-For tests:
+### Tests
 
 - `backend/e2e`: Contains end-to-end tests for the backend automation, including assertions, flow classes, helper
   classes, and test classes.
 - `web/tests`: Contains test classes for web automation, including tests and helpers.
 - `resources/test_data`: Contains sample request/response JSON files for backend automation.
 
-For config
+### Config
 
 - `resources`: Contains configuration files for logging, report portal, and stage properties. Here we assume `stage` is
   the test environment, this can easily be scaled to support different environments by adding property files and a

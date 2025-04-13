@@ -31,7 +31,9 @@ This framework keeps below simple principles in mind:
    required
 4. Given robust and fast signals on pass/fail metrics and test reliability
 
-## How to run tests?
+## Pre setup
+
+### Setup reporting stack
 
 Ensure you have docker running on your local machine and run below command to spin up report portal. We use this for as
 reporting aspects
@@ -48,6 +50,25 @@ Once containers are up
   watch [this video](https://youtu.be/5qqeDUFuDsw?si=HxlZ5lPq9ydVRTh0)
 - After you create a project, you'll need to add the local project API key to `reportportal.properties` file
 
+### Setup credentials
+
+Ensure you add your JFROG platform credentials in `.bash_profile` or `.zshrc` and source it before running the tests
+
+```zsh
+# JFrog
+export JFROG_USERNAME=""
+export JFROG_PASSWORD=""
+```
+
+Also replace the hostname in `stage.properties`
+
+```text
+ARTIFACTORY_HOSTNAME=https://automationhacks.jfrog.io
+JFROG_UI=https://automationhacks.jfrog.io/ui
+```
+
+## How to run tests?
+
 Next, let's run the test using gradle command line
 
 ```cmd
@@ -55,6 +76,11 @@ Next, let's run the test using gradle command line
 ```
 
 > Tip: You can run specific test by providing those groups like (`smoke, regression, backend, web_ui`, etc.)
+
+If you run `regression`, it would run 2 tests specified in backend and web packages:
+
+- `src/test/java/backend/e2e/tests/SecurityViolationsPerPolicyAPITest.java`
+- `src/test/java/web/tests/SecurityViolationsPerPolicyUITest.java` (does everything done by API test + UI verification)
 
 ## Folder structure
 
@@ -86,3 +112,9 @@ For config
 - `resources`: Contains configuration files for logging, report portal, and stage properties. Here we assume `stage` is
   the test environment, this can easily be scaled to support different environments by adding property files and a
   toggle in Environment class
+
+## Patterns used
+
+- **Builder pattern**: to prepare request payloads for APIs
+- **Factory pattern**: provide appropriate WebDriver instance for web automation
+- **Page Object Model**: to separate page elements and actions from test logic

@@ -1,8 +1,5 @@
 package web.tests;
 
-import static io.automationhacks.backend.core.env.Environment.getPassword;
-import static io.automationhacks.backend.core.env.Environment.getUsername;
-
 import io.automationhacks.backend.core.env.Environment;
 import io.automationhacks.backend.core.utils.StringUtils;
 import io.automationhacks.common.testing.TestSuites;
@@ -10,7 +7,6 @@ import io.automationhacks.web.core.constant.Browser;
 import io.automationhacks.web.core.driver.DriverFactory;
 import io.automationhacks.web.domain.constants.PageUrls;
 import io.automationhacks.web.domain.page_objects.common.LoadingPage;
-import io.automationhacks.web.domain.page_objects.login.LoginPage;
 import io.automationhacks.web.domain.page_objects.xray.scans_list.ArtifactsPage;
 
 import org.openqa.selenium.WebDriver;
@@ -24,6 +20,7 @@ import web.helper.JFrogWebHelper;
 public class SecurityViolationsPerPolicyUITest {
     private final WebDriver driver = new DriverFactory(Browser.CHROME).getDriver();
     private final String jFrogUI = Environment.getJFrogUI();
+    private final JFrogWebHelper jFrogWebHelper = new JFrogWebHelper();
     private String repoKey;
 
     @BeforeMethod(alwaysRun = true)
@@ -46,27 +43,18 @@ public class SecurityViolationsPerPolicyUITest {
                 THEN policy violations should only have critical and high severity
                 """)
     public void
-            givenWatchAndPolicyIsCreated_WhenScanIsOpened_ThenPolicyViolationsShouldOnlyHaveCriticalAndHigh() {
-        var loginPage = new LoginPage(driver);
-        var loginPageText = loginPage.getLoginPageBanner();
-
-        XrayUIAssertions xrayUIAssertions = new XrayUIAssertions();
-        xrayUIAssertions.verifyLoginPageBanner(loginPageText);
-
-        loginPage.waitForLoginPageToLoad();
-        loginPage.login(getUsername(), getPassword());
-
-        new LoadingPage(driver).waitForAnimationToFinish();
+            givenWatchAndPolicyIsCreated_WhenScanIsOpened_ThenPolicyViolationsShouldOnlyHaveCriticalAndHigh()
+                    throws InterruptedException {
+        jFrogWebHelper.loginToJFrog(driver);
 
         String url = PageUrls.XRAY_SCAN_LIST.formatted(jFrogUI, repoKey);
         driver.get(url);
 
-        var basePath = "alpine/3.9";
-        var artifactSelectorPath = "%s/alpine/3.9/manifest.json".formatted(basePath);
         var artifactsPage = new ArtifactsPage(driver);
-        artifactsPage.clickOnVulnerabilities(artifactSelectorPath);
+        artifactsPage.clickOnVulnerabilities();
 
         var severityCounts = artifactsPage.getPolicyViolations();
+        XrayUIAssertions xrayUIAssertions = new XrayUIAssertions();
         xrayUIAssertions.verifyPolicyViolationsBelowHighAreNotReported(severityCounts);
     }
 

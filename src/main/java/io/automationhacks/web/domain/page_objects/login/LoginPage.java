@@ -20,6 +20,10 @@ public class LoginPage {
     }
 
     public void login(String username, String password) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(
+                ExpectedConditions.visibilityOfElementLocated(By.cssSelector(userNameTextBoxCss)));
+
         var userName = driver.findElement(By.cssSelector(userNameTextBoxCss));
         userName.sendKeys(username);
 
@@ -28,10 +32,6 @@ public class LoginPage {
 
         var loginButton = driver.findElement(By.cssSelector(loginButtonCss));
         loginButton.click();
-    }
-
-    public String getLoginPageBanner() {
-        return driver.findElement(By.className(welcomeBannerLabelClass)).getText();
     }
 
     public void waitForLoginPageToLoad() {

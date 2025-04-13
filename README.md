@@ -23,11 +23,12 @@ This project uses below tech stack
 
 ## Design principles
 
-This framework keeps below in mind:
+This framework keeps below simple principles in mind:
 
-1. Keep tests simple and easy to write
-2. Don't create heavy abstractions that are difficult to maintain later; prioritise test authoring speed
-3. Leverage underlying frameworks capabilities without wrapping their capabilities into unnecessary abstractions
+1. Keep tests simple and easy to understand and write
+2. Don't create heavy abstractions that are difficult to maintain later; always prioritise test authoring speed
+3. Leverage underlying frameworks capabilities without wrapping their capabilities into unnecessary abstractions unless
+   required
 4. Given robust and fast signals on pass/fail metrics and test reliability
 
 ## How to run tests?
@@ -39,9 +40,13 @@ reporting aspects
 docker-compose -p reportportal up -d --force-recreate
 ```
 
-Once containers are up, You can
-follow [these steps](https://automationhacks.io/2024-11-22-how-to-setup-report-portal-dashboards-using-attributes) in
-order to create a project in report portal or [this video](https://youtu.be/5qqeDUFuDsw?si=HxlZ5lPq9ydVRTh0)
+Once containers are up
+
+- You can
+  follow [these steps](https://automationhacks.io/2024-11-22-how-to-setup-report-portal-dashboards-using-attributes) in
+  order to create a project named `jfrog` in report portal or
+  watch [this video](https://youtu.be/5qqeDUFuDsw?si=HxlZ5lPq9ydVRTh0)
+- After you create a project, you'll need to add the local project API key to `reportportal.properties` file
 
 Next, let's run the test using gradle command line
 
@@ -49,15 +54,15 @@ Next, let's run the test using gradle command line
 ./gradlew test -DincludedGroups=regression --info
 ```
 
-> Tip: You can run specific test by providing those groups like (smoke, regression, backend, web_ui, etc.)
+> Tip: You can run specific test by providing those groups like (`smoke, regression, backend, web_ui`, etc.)
 
 ## Folder structure
 
-The project is structured in a way that separates the backend and web automation code. 
+The project is structured in a way that separates backend and web automation code.
 
 Below is the general folder structure:
 
-For backend:
+### Backend
 
 - `backend/core`: Contains core classes for API automation, including command execution, constants, environment setup,
   file management, serialization and utility classes.
@@ -73,8 +78,11 @@ For tests:
 
 - `backend/e2e`: Contains end-to-end tests for the backend automation, including assertions, flow classes, helper
   classes, and test classes.
+- `web/tests`: Contains test classes for web automation, including tests and helpers.
 - `resources/test_data`: Contains sample request/response JSON files for backend automation.
 
 For config
 
-- `resources`: Contains configuration files for logging, report portal, and stage properties.
+- `resources`: Contains configuration files for logging, report portal, and stage properties. Here we assume `stage` is
+  the test environment, this can easily be scaled to support different environments by adding property files and a
+  toggle in Environment class

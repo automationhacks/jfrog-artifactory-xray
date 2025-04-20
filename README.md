@@ -41,7 +41,7 @@ API
 
 - **Builder pattern**: to prepare request payloads for APIs
 
-UI 
+UI
 
 - **Factory pattern**: provide appropriate WebDriver instance for web automation
 - **Page Object Model**: to separate page elements and actions from test logic
@@ -80,7 +80,7 @@ After setup, you’ll receive an email from `service@jfrog.com` with your platfo
 
 ### Setup reporting stack
 
-Ensure you have docker running on your local machine and run below command to spin up report portal. 
+Ensure you have docker running on your local machine and run below command to spin up report portal.
 
 We'll use this for as test reporting and analytics tool.
 
@@ -165,7 +165,17 @@ Below is the general folder structure:
 
 ## Future Enhancement ideas
 
+Backend
+
 - Add TestNG listener class to send a slack notification after test run with pass/fail and report portal link
 - Add switch in build.gradle to change the environment dynamically
 - Add framework utilities (connect to db with connection pooling, queue (rabbitmq, kafka), etc.)
 - Refactor API layer to decouple framework from RestAssured and add a layer in between to provide future scalability
+
+Web
+
+- For web, we can introduce a BasePage layer that wraps Selenium actions and does auto wait for the element on which the
+  action has to be performed
+- Selenium Grid with docker can be integrated to run tests in a scalable way across different browsers
+- DriverFactory could be enhanced with support to switch to a cloud device lab if required
+- BaseTest class can be introduced to handle the setup and teardown of the driver instance

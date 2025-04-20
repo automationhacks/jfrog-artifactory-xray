@@ -29,15 +29,20 @@ This project uses below tech stack
 
 This framework keeps below simple principles in mind:
 
-1. Keep tests simple and easy to understand and write
+1. Keep tests simple, easy to understand and write
 2. Don't create heavy abstractions that are difficult to maintain later; always prioritise test authoring speed
 3. Leverage underlying frameworks capabilities without wrapping their capabilities into unnecessary abstractions unless
    required
-4. Given robust and fast signals on pass/fail metrics and test reliability
+4. Provide robust and fast signals on pass/fail metrics and test reliability
 
 ## Design patterns used
 
+API
+
 - **Builder pattern**: to prepare request payloads for APIs
+
+UI 
+
 - **Factory pattern**: provide appropriate WebDriver instance for web automation
 - **Page Object Model**: to separate page elements and actions from test logic
 
@@ -55,8 +60,7 @@ Please set up a trial account. Please follow the following steps to take.
 
 Follow the instructions to complete the setup.
 
-1. After setup, you’ll receive an email from `service@jfrog.com` with your platform
-   details (URL, username, and password).
+After setup, you’ll receive an email from `service@jfrog.com` with your platform details (URL, username, and password).
 
 > Please note: If you registered using Google, access the platform by logging in with your
 > Google account and **setting up an admin user**. Additionally, you will receive
@@ -76,8 +80,9 @@ Follow the instructions to complete the setup.
 
 ### Setup reporting stack
 
-Ensure you have docker running on your local machine and run below command to spin up report portal. We use this for as
-reporting aspects
+Ensure you have docker running on your local machine and run below command to spin up report portal. 
+
+We'll use this for as test reporting and analytics tool.
 
 ```cmd
 docker-compose -p reportportal up -d --force-recreate
@@ -99,6 +104,10 @@ Ensure you add your JFROG platform credentials in `.bash_profile` or `.zshrc` an
 # JFrog
 export JFROG_USERNAME=""
 export JFROG_PASSWORD=""
+```
+
+```zsh
+source ~/.zshrc
 ```
 
 Also replace the hostname in `stage.properties`
@@ -154,3 +163,9 @@ Below is the general folder structure:
   the test environment, this can easily be scaled to support different environments by adding property files and a
   toggle in Environment class
 
+## Future Enhancement ideas
+
+- Add TestNG listener class to send a slack notification after test run with pass/fail and report portal link
+- Add switch in build.gradle to change the environment dynamically
+- Add framework utilities (connect to db with connection pooling, queue (rabbitmq, kafka), etc.)
+- Refactor API layer to decouple framework from RestAssured and add a layer in between to provide future scalability
